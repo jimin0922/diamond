@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diamond Pattern</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #001f3f; /* Dark navy background color */
+        }
+        canvas {
+            border: 1px solid black;
+            background-color: #001f3f; /* Match canvas background color with body */
+        }
+    </style>
+</head>
+<body>
+    <canvas id="diamondCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('diamondCanvas');
+        const context = canvas.getContext('2d');
+
+        // Set the canvas size
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        function drawDiamond(x, y, size) {
+            const color = 'rgba(255, 255, 224, 1)'; // Light yellow color
+            context.fillStyle = color;
+
+            // Draw the top triangle (pointing down)
+            context.beginPath();
+            context.moveTo(x, y - size / 2); // Top point
+            context.lineTo(x + size / 2, y); // Bottom right point
+            context.lineTo(x - size / 2, y); // Bottom left point
+            context.closePath();
+            context.fill();
+
+            // Draw the bottom triangle (pointing up)
+            context.beginPath();
+            context.moveTo(x, y + size / 2); // Bottom point
+            context.lineTo(x + size / 2, y); // Top right point
+            context.lineTo(x - size / 2, y); // Top left point
+            context.closePath();
+            context.fill();
+        }
+
+        // Generate diamonds in a grid pattern
+        function generatePatternDiamonds(rows, cols, size) {
+            const horizontalSpacing = size;
+            const verticalSpacing = size;
+            const startX = size / 2;
+            const startY = size / 2;
+
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const x = startX + col * horizontalSpacing;
+                    const y = startY + row * verticalSpacing;
+                    drawDiamond(x, y, size);
+                }
+            }
+        }
+
+        const rows = Math.ceil(canvas.height / 60); // Adjust the size and number of rows
+        const cols = Math.ceil(canvas.width / 60); // Adjust the size and number of columns
+        const size = 60; // Size of the diamonds
+
+        generatePatternDiamonds(rows, cols, size);
+    </script>
+</body>
+</html>
